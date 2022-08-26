@@ -288,7 +288,7 @@ final class JwtAuthentication implements MiddlewareInterface
         try {
             $decoded = JWT::decode(
                 $token,
-                $this->options["secret"]
+                $this->options["key"]
             );
             return (array) $decoded;
         } catch (Exception $exception) {
@@ -367,20 +367,43 @@ final class JwtAuthentication implements MiddlewareInterface
     }
 
     /**
+     * Set the key.
+     *
+     * @param string|string[] $key
+     */
+    private function key($key): void
+    {
+        if ( !$key instanceof Key && !(is_array($key) && !empty($key) && !count(array_filter($key, fn($entry) => !($entry instanceof Key) )) > 0 ) ) {
+            throw new InvalidArgumentException(
+                'Key must be either an instance of Firebase/JWT/Key or an array of "kid" => "instance of Firebase/JWT/Key" pairs'
+            );
+        }
+        $this->options["key"] = $key;
+    }
+
+    /**
      * Set the secret key.
      *
      * @param string|string[] $secret
      */
     private function secret($secret): void
     {
-        if ( !$secret instanceof Key && !(is_array($secret) && !empty($secret) && !count(array_filter($secret, fn($entry) => !($entry instanceof Key) )) > 0 ) ) {
-            throw new InvalidArgumentException(
-                'Secret must be either an instance of Firebase/JWT/Key or an array of "kid" => "instance of Firebase/JWT/Key" pairs'
-            );
-        }
-        $this->options["secret"] = $secret;
+      throw new Exception(
+          'Secret option is deprecated'
+      );
     }
 
+    /**
+     * Set the secret key.
+     *
+     * @param string|string[] $secret
+     */
+    private function algorithm($algorithm): void
+    {
+      throw new Exception(
+          'Algorithm option is deprecated'
+      );
+    }
     /**
      * Set the error handler.
      */
