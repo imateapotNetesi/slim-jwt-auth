@@ -83,7 +83,6 @@ final class JwtAuthentication implements MiddlewareInterface
     private $options = [
         "secure" => true,
         "relaxed" => ["localhost", "127.0.0.1"],
-        "algorithm" => ["HS256", "HS512", "HS384"],
         "header" => "Authorization",
         "regexp" => "/Bearer\s+(.*)$/i",
         "cookie" => "token",
@@ -394,17 +393,6 @@ final class JwtAuthentication implements MiddlewareInterface
     }
 
     /**
-     * Set the algorithm.
-     *
-     * @param string|string[] $algorithm
-     */
-    private function algorithm($algorithm): void
-    {
-      throw new Exception(
-          'Algorithm option is deprecated'
-      );
-    }
-    /**
      * Set the error handler.
      */
     private function error(callable $error): void
@@ -467,7 +455,9 @@ final class JwtAuthentication implements MiddlewareInterface
      */
     private function algorithm($algorithm): void
     {
-        $this->options["algorithm"] = (array) $algorithm;
+      throw new Exception(
+          'Algorithm option is deprecated'
+      );
     }
 
     /**
