@@ -1,5 +1,5 @@
 {
-    "name": "tuupola/slim-jwt-auth",
+    "name": "imateapot92/slim-jwt-auth",
     "description": "PSR-7 and PSR-15 JWT Authentication Middleware",
     "keywords": [
         "psr-7",
@@ -16,6 +16,11 @@
             "name": "Mika Tuupola",
             "email": "tuupola@appelsiini.net",
             "homepage": "https://appelsiini.net/",
+            "role": "Developer"
+        },
+          {
+            "name": "Federico Fazio",
+            "email": "federicofz@gmail.com",
             "role": "Developer"
         }
     ],
@@ -48,7 +53,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-3.x": "3.0.x-dev"
+            "dev-4.x": "4.0.x-dev"
         }
     }
 }
