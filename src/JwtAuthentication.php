@@ -39,6 +39,7 @@ use DomainException;
 use InvalidArgumentException;
 use Exception;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -287,8 +288,7 @@ final class JwtAuthentication implements MiddlewareInterface
         try {
             $decoded = JWT::decode(
                 $token,
-                $this->options["secret"],
-                (array) $this->options["algorithm"]
+                $this->options["secret"]
             );
             return (array) $decoded;
         } catch (Exception $exception) {
@@ -373,9 +373,9 @@ final class JwtAuthentication implements MiddlewareInterface
      */
     private function secret($secret): void
     {
-        if (false === is_array($secret) && false === is_string($secret) && ! $secret instanceof \ArrayAccess) {
+        if ( !$secret instanceof Key && !(is_array($secret) && !empty($secret) && !count(array_filter($secret, fn($entry) => !($entry instanceof Key) )) > 0 ) ) {
             throw new InvalidArgumentException(
-                'Secret must be either a string or an array of "kid" => "secret" pairs'
+                'Secret must be either an instance of Firebase/JWT/Key or an array of "kid" => "instance of Firebase/JWT/Key" pairs'
             );
         }
         $this->options["secret"] = $secret;
