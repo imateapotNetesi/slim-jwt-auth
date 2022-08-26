@@ -394,7 +394,7 @@ final class JwtAuthentication implements MiddlewareInterface
     }
 
     /**
-     * Set the secret key.
+     * Set the algorithm.
      *
      * @param string|string[] $secret
      */
